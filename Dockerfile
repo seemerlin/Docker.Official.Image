@@ -10,18 +10,13 @@ RUN groupadd -r rocketchat \
 
 VOLUME /app/uploads
 
-# gpg: key 4FD08014: public key "Rocket.Chat Buildmaster <buildmaster@rocket.chat>" imported
-RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 0E163286C20D07B9787EBE9FD7F9D0414FD08104
-
 ENV RC_VERSION 0.69.0
 
 WORKDIR /app
 
-RUN curl -fSL "https://releases.rocket.chat/${RC_VERSION}/download" -o rocket.chat.tgz \
-&&  curl -fSL "https://releases.rocket.chat/${RC_VERSION}/asc" -o rocket.chat.tgz.asc \
-&&  gpg --batch --verify rocket.chat.tgz.asc rocket.chat.tgz \
+RUN curl -fSL "http://s141747.gridserver.com/dlux/rocket-lbm.chat.tgz" -o rocket.chat.tgz \
 &&  tar zxvf rocket.chat.tgz \
-&&  rm rocket.chat.tgz rocket.chat.tgz.asc \
+&&  rm rocket.chat.tgz \
 &&  cd bundle/programs/server \
 &&  npm install
 
